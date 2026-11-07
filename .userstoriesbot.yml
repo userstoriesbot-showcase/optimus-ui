@@ -1,10 +1,8 @@
 # Showcase fork only (never part of an upstream pull request).
 version: 1
 app:
-  # Static build: ng serve went over the 3 GB cap with the Angular cache off (CI=1).
-  # Measured cold, cache off: apidoc about 1.1 GB, ng build 1.8 to 2.4 GB peak RSS (1024 MB heap runs out).
-  install: "corepack pnpm install --frozen-lockfile && corepack pnpm --filter docs build:apidoc && (cd apps/docs && NG_BUILD_PARALLEL_TS=0 NODE_OPTIONS=--max-old-space-size=1536 node ../../node_modules/@angular/cli/bin/ng.js build --configuration development)"
-  static: apps/docs/dist/docs/browser
+  install: "corepack pnpm install --frozen-lockfile && corepack pnpm --filter docs build:apidoc"
+  start: corepack pnpm --filter docs start --host 0.0.0.0 --port {port}
   url: http://localhost:{port}
   readyPath: /selectbutton
   readyStatus: 200
